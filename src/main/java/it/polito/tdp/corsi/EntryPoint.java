@@ -2,6 +2,8 @@ package it.polito.tdp.corsi;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+
+import it.polito.tdp.corsi.model.Model;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,14 +14,29 @@ public class EntryPoint extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+    	
+    	//COME MODIFICARE LA CLASSE ENTRY POINT:
+    	
+    	//1. Creare un loader
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
+        Parent root = loader.load();
         
+        //2. Laciare la scena inalterata
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
         
-        stage.setTitle("JavaFX and Maven");
+        //3. Creare un modello
+        Model model= new Model();
+        
+        //4. Creare un riferimento alla classe Controller
+        FXMLController controller = loader.getController();
+        controller.setModel(model); //Creare il metodo "setModel(...)" nella classe FXMLController
+        
+        //5. Imposto un titolo
+        stage.setTitle("Gestore Corsi");
         stage.setScene(scene);
         stage.show();
+        
+        //SOLITAMENTE QUESTA CLASSE E' SEMPRE FORNITA
     }
 
     /**
